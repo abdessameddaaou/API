@@ -1,0 +1,28 @@
+<%- include('header') %>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+      <h1 class="text-primary text-center my-4">Listes des utilisateurs</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% let i =0 
+          utilisateurs.forEach(utilisateur => { %>
+          <tr>
+
+            <td><%= utilisateur.email %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <button style="background-color: red;"><a href="/logout" style="color: white; text-decoration: none;"> deconnecter</a></button>
+  </div>
+</div>
+
+
+<%- include('footer') %>

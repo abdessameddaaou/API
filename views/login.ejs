@@ -1,0 +1,64 @@
+<%- include('header') %>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-8 mt-5">
+      <h1 class="text-primary text-center my-4">Connexion</h1>
+      <form method="POST" id="form">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            aria-describedby="emailHelp"
+            id="email"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" />
+        </div>
+        <p id="error" style="color: red"></p>
+        <button type="submit" class="btn btn-primary">se connecter</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector("#form");
+  const error = document.querySelector("#error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    let email = null;
+    let password = null;
+
+    email = form.email.value;
+    password = form.password.value;
+
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }), // stringify => convert js value to js object
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+
+      if (data.message) {
+        error.textContent = data.message;
+      }
+      if (data.utilisateur) {
+        location.assign("users");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>
+
+<%- include('footer') %>

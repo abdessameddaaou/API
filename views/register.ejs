@@ -1,0 +1,68 @@
+<%- include('header') %>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-8 mt-5">
+      <h1 class="text-primary text-center my-4">Inscription</h1>
+      <form method="POST" id="form">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            aria-describedby="emailHelp"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" />
+        </div>
+        <p id="error" style="color: red"></p>
+        <button type="submit" class="btn btn-primary">s'inscrire</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector("#form");
+  const error = document.querySelector("#error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    let email = null;
+    let password = null;
+    email = form.email.value;
+    password = form.password.value;
+
+    if (password.length >= 6) {
+      try {
+        const res = await fetch("/register", {
+          method: "POST",
+          body: JSON.stringify({ email, password }), // stringify => convert js value to js object
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await res.json();
+        if (data.message) {
+          error.textContent = data.message;
+        }
+
+        if (data.utilisateur) {
+          location.assign("login");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      error.textContent = "le mot de passe doit contenir au moins 6 caractère";
+    }
+  });
+</script>
+
+<%- include('footer') %>
