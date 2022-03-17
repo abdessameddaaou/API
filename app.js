@@ -21,6 +21,7 @@ app.use(cookieParser())
 
 // permet de faire le lien avec ejs et backend
 app.set('view engine', 'ejs')
+app.get('/', (req, res) => res.render('home'))
 
 
 
