@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const Utilisateur = require("../Models/Utilisateur");
 
-//Verifier que l'utilisateur est connecté et récuperer son id
+//Verifier que l'utilisateur est connecté
 const verifierUtilisateur = (req, res, next) => {
   const token = req.cookies.jwt;
 
